@@ -27,7 +27,7 @@ namespace Validations.Validators
             if (propertyInfo != null)
             {
                 var dependentValue = propertyInfo.GetValue(validationContext.ObjectInstance) as string;
-                if (!string.IsNullOrEmpty(dependentValue) && value.ToString().Equals(dependentValue, StringComparison.CurrentCultureIgnoreCase))
+                if (!string.IsNullOrEmpty(dependentValue) && !value.ToString().Equals(dependentValue, StringComparison.CurrentCultureIgnoreCase))
                 {
                     return new ValidationResult(ErrorMessage);
                 }

@@ -17,7 +17,7 @@ namespace Validations.Controllers
         [HttpPost]
         public ActionResult AddUser(UserDetails user)
         {
-            return View(user);
+            return !ModelState.IsValid? View("Index", user) : View(user);
         }
     }
 }
