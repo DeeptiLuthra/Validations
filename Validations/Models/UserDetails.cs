@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Validations.Validators;
 
 namespace Validations.Models
@@ -25,7 +27,24 @@ namespace Validations.Models
         [Display(Name ="Birth Month")]
         public string BirthMonth { get; set; }
 
+        public static IEnumerable<SelectListItem> Months
+        {
+            get
+            {
+                return DateTimeFormatInfo
+                       .InvariantInfo
+                       .MonthNames
+                       .Where(m=> !string.IsNullOrEmpty(m))
+                       .Select((monthName, index) => new SelectListItem
+                       {
+                           Value = (index + 1).ToString(),
+                           Text = monthName
+                       });
+            }
+        }
+
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression("\\d{9}",ErrorMessage ="Please enter a 9-digit number without spaces")]
         [Display(Name ="Phone Number")]
         public long PhoneNum { get; set; }
 
@@ -41,7 +60,7 @@ namespace Validations.Models
         [Required]
         [DataType(DataType.Password)]
         [Display(Name ="Confirm Password")]
-        [Compare("Password",ErrorMessage ="Must match Password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password",ErrorMessage ="Must match Password")]
         //[EqualTo("Password", ErrorMessage = "Password does not match Confirm Password")]
         public string ConfirmPassword { get; set; }
     }
