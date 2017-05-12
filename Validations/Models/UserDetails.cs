@@ -30,6 +30,7 @@ namespace Validations.Models
         public string Password { get; set; }
 
         [Required]
+        [EqualTo("Password", ErrorMessage = "Password does not match Confirm Password")]
         public string ConfirmPassword { get; set; }
     }
 }
